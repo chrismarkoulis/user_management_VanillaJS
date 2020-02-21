@@ -1,0 +1,90 @@
+/************** User List ***************/
+
+@media screen and (min-width: 769px) {
+    body {
+      background-color: whitesmoke;
+    }
+      .userList {
+        display: flex;
+        width: 50%;
+        height: auto;
+        overflow-y: scroll;
+      }
+      
+      .user-selected {
+        cursor: pointer;
+        background-color: #1b68b3;
+        color: white;
+      }
+        
+      .left-panel {
+       
+        margin-left: 15px;
+      }
+    
+      .user-row:hover {
+        cursor: pointer;
+        background-color: #e8e8e8;
+       }
+      
+      .user-name {
+        font-size: 15px;
+        margin-top: 25px;
+        font-weight: bold;
+      }
+      
+      .user-email {
+        font-size: 15px;
+        color:lightslategray;
+      }
+      img{
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        margin: 10px;
+      
+      }
+    }
+    
+    
+    @media screen and (max-width: 768px) {
+      
+        
+      .userInfo {
+       display: none;
+      }
+      
+      .users-panel  {
+         width: 100% 
+      }
+    
+      .user-display {
+        
+        align-items: center;
+        height: 75px;
+      }
+    
+      img{
+        border-radius: 50%;
+        height: 70px;
+        width: 70px;
+        margin: 10px;
+       
+      
+      }
+    
+      
+    
+      .user-row:hover{
+        background-color: #e8e8e8;
+        cursor: pointer;
+    }
+  
+    .user-selected {
+      cursor: pointer;
+      background-color: #1b68b3;
+      color: white;
+    }
+  
+      
+    } 

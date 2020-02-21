@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="admin-panel.css">
+    <link rel="stylesheet" href="user-list.css">
+    <link rel="stylesheet" href="user-form.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="adminPanel">
+            <div class="userList">
+                <div class="container-fluid">
+                    <div class="row user-display">
+                        <div class="col-12 users-panel">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form id="userForm">
+                <h3 class="form-field-title">Name</h3>
+                <label for="name">
+                    <input type="text" name="name" id="name" />
+                </label>
+                <h3 class="form-field-title">Email adress</h3>
+                <label for="email">
+                    <input type="email" name="email" id="email" />
+                </label>
+                <h3 class="form-field-title">Phone</h3>
+                <label for="phone">
+                    <input type="tel" name="phone" id="phone" />
+                </label>
+                <h3 class="form-field-title">Adress</h3>
+                <label for="address">
+                    <input type="text" name="address" id="address" />
+                </label>
+                <h3 class="form-field-title">Company</h3>
+                <label for="company">
+                    <input type="text" name="company" id="company" />
+                </label>
+                <div class="buttons">
+                    <button type="button" hidden="true" class="btn button-cancel">Cancel</button>
+                    <button type="submit" disabled="true" class="btn btn-primary button-submit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"> </script>
+       
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+/************** Admin Panel *******************/
+
+@media screen and (min-width: 769px) {
+  
+    .adminPanel {
+      display: flex;
+      width: 100%;
+      height: 90%;
+      position: absolute;
+      top: 30px;
+      left: -0.7px;
+   
+      box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .adminPanel {
+      position: relative;
+      display: flex;
+      width: 100%;
+    }
+  }
+  .container {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    
+  }
