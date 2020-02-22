@@ -1,95 +1,42 @@
-"use strict";
+const app = async () => {
 
-document.addEventListener('DOMContentLoaded', () => {
+    const response = await fetch("users.json");
+    const users = await response.json();
+    console.log(users);
 
-    const usersPanel = document.querySelector(".users-panel");
-    const userForm = document.querySelector("#userForm");
+    let editing = false;
     
+    const usersPanel = document.querySelector(".users-panel");
+    const usersForm = document.getElementById("userForm");
     const nameInput = document.getElementById('name');
     const emailInput = document.getElementById('email');
     const phoneInput = document.getElementById('phone');
     const addressInput = document.getElementById('address');
     const companyInput = document.getElementById('company');
 
-    let editing = false;
-    console.log("editing onInit: ", editing)
+    const selectedUser = id => users.find(user => user.id === id);
 
-    let allUsers = [];
-
-    
-    
-    fetch("users.json")
-        .then(res => res.json())
-        .then(userData => userData.map(user => {
-    allUsers = userData;
-    usersPanel.innerHTML += `
-    <div class="row user-row" data-id="${user.id}">
-    <div class="users-photos">
-    <img src="${user.photo}" alt="users-photos">
-  </div>
-  <div class="userInfo">
-    <div class="user-name">${user.name}</div>
-    <div class="user-email">${user.email}</div>
-  </div>
-  </div>
-  
-    ` 
-         
-
-}));
-
-           
-
-    window.onload = () => {
-        const usersRow = document.querySelectorAll('.user-row');
-        usersRow.forEach(userRow => userRow.addEventListener('click', () => {
-            editing = true;
-            console.log("editing onClick: ",editing);
-
-            const dataID = userRow.getAttribute('data-id');
-            
-            
-            const userSelected = allUsers.filter(user => {
-                return user.id === dataID;
-              })
-
-
-            nameInput.value = userSelected[0].name;
-            emailInput.value = userSelected[0].email;
-            phoneInput.value = userSelected[0].phone;
-            addressInput.value = userSelected[0].address;
-            companyInput.value = userSelected[0].company;
-
-            
-
-            console.log(userSelected);
-             
-
-            userForm.addEventListener('submit', () => {
-                event.preventDefault();
-                const userName = userRow.querySelector('.user-name');
-
-               
-                        userName.innerText = nameInput.value;
-                        userSelected[0].name = nameInput.value;
-                  
-                console.log(userSelected);
-                console.log(userName);
-                
-               
-             });
-            
-            
-           
-        })
-
-        );
-
+    const displayUserForm = user => {
+      nameInput.value = user.name;
+      emailInput.value = user.email;
+      phoneInput.value = user.phone;
+      addressInput.value = user.address;
+      companyInput.value = user.company;
     }
 
-    
-    (function handleInputChange() {
-        const formInputs = document.querySelectorAll('input');
+    const updateUser = user => {
+     
+    }
+
+    const formSubmit = id => {
+      usersForm.addEventListener('submit', () => {
+        event.preventDefault();
+        updateUser(selectedUser(id))
+      });
+    }
+
+    const handleInputChange = () => {
+      const formInputs = document.querySelectorAll('input');
         formInputs.forEach(input => {
            
             input.addEventListener('keyup', () => {
@@ -108,10 +55,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
         });
     
-    }());
+    }
 
-    (function cancelAction() {
-        const cancelButton = document.querySelector(".button-cancel");
+    const cancelAction = () => {
+      const cancelButton = document.querySelector(".button-cancel");
         cancelButton.addEventListener('click', () => {
             editing = false;
             console.log('editing state: ', editing);
@@ -123,23 +70,44 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector(".button-submit").disabled = true;
             cancelButton.hidden = true;
         });
-    }());
+    }
+
+    users.forEach(user => {
+        usersPanel.innerHTML += `
+        <div id="users" class="row user-row" data-name="${user.name}" data-id="${user.id}">
+        <div class="users-photos">
+        <img src="${user.photo}" alt="users-photos">
+      </div>
+      <div class="userInfo">
+        <div class="user-name">${user.name}</div>
+        <div class="user-email">${user.email}</div>
+      </div>
+      </div>
+        `
+        const userRows = usersPanel.getElementsByClassName("user-row");
+        for (let i=0; i < userRows.length; i++) {
+          userRows[i].addEventListener('click', () => {
+
+            editing = true;
+            const dataID = userRows[i].getAttribute('data-id');
+            //const dataName = userRows[i].getAttribute('data-name');
+
+           
+
+            handleInputChange();
+            cancelAction();
+            console.log(selectedUser(dataID));
+            displayUserForm(selectedUser(dataID));
+           
+            
+          })
+
+        };
+
+    });
+
+};
+
+app();
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-});
