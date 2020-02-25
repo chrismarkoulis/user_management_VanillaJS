@@ -16,6 +16,11 @@
         background-color: #1b68b3;
         color: white;
       }
+
+      .user-selected:hover {
+        background-color: #1b68b3;
+        cursor: pointer;
+      }
         
       .left-panel {
        
@@ -24,7 +29,7 @@
     
       .user-row:hover {
         cursor: pointer;
-        background-color: #e8e8e8;
+        /* background-color: #e8e8e8; */
        }
       
       .user-name {
@@ -76,7 +81,7 @@
       
     
       .user-row:hover{
-        background-color: #e8e8e8;
+        /* background-color: #e8e8e8; */
         cursor: pointer;
     }
   
