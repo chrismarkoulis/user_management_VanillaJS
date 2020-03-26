@@ -26,71 +26,57 @@ const app = async () => {
         cancelAction();
     }
 
-    const getUsers = () => {
-        return users;
-    }
+    const getUser = index => users[index];
 
-    const getUser = index => {
-        return users[index];
-    }
+    const editUser = (index, user) => (users[index] = user);
 
-    const editUser = (index, user) => {
-        users[index] = user;
-    }
-
-   
     const highlightSelected = selectedIndex => {
-        const userRows = usersPanel.getElementsByClassName("user-row");
-        for (let i = 0; i < userRows.length; i++) {
-            userRows[i].classList.remove('user-selected');
+        const userRows = Array.from(usersPanel.getElementsByClassName("user-row"));
 
-        }
-
+        userRows.forEach(userRow => userRow.classList.remove("user-selected"));
         userRows[selectedIndex].classList.add("user-selected");
-    }
+    };
 
 
     const handleInputChange = () => {
-        for (let i = 0; i < editInputs.length; i++) {
-            editInputs[i].addEventListener('keyup', () => {
+        Array.from(editInputs).forEach(input => {
+            input.addEventListener('keyup', () => {
                 editing == true ? (console.log('edit mode enabled'), saveButton.disabled = false,
-                cancelButton.hidden = false) : (saveButton.disabled = true,
-                    cancelButton.hidden = true, console.log('not editing now...'))
+                    cancelButton.hidden = false) : (saveButton.disabled = true,
+                        cancelButton.hidden = true, console.log('not editing now...'))
             });
-        }
+        });
     }
 
+
     const cancelAction = () => {
-            cancelButton.addEventListener('click', () => {
-                editing = false;
-                console.log('edit mode enabled: ', editing);
-                nameInput.value = '';
-                emailInput.value = '';
-                phoneInput.value = '';
-                addressInput.value = '';
-                companyInput.value = '';
-                saveButton.disabled = true;
-                cancelButton.hidden = true;
+        cancelButton.addEventListener('click', () => {
+            editing = false;
+            console.log('edit mode enabled: ', editing);
+            nameInput.value = '';
+            emailInput.value = '';
+            phoneInput.value = '';
+            addressInput.value = '';
+            companyInput.value = '';
+            saveButton.disabled = true;
+            cancelButton.hidden = true;
         });
     }
 
     const displayDataOnInput = selectedUser => {
-        nameInput.value = selectedUser['name'];
-        emailInput.value = selectedUser['email'];
-        phoneInput.value = selectedUser['phone'];
-        addressInput.value = selectedUser['address'];
-        companyInput.value = selectedUser['company'];
+        nameInput.value = selectedUser.name;
+        emailInput.value = selectedUser.email;
+        phoneInput.value = selectedUser.phone;
+        addressInput.value = selectedUser.address;
+        companyInput.value = selectedUser.company;
     }
 
-    
+
 
     const renderUserList = () => {
-        const usersList = getUsers();
 
-        usersPanel.innerHTML = '';
-        usersList.map((user, index) => {
-            let template = `
-                <div class="row user-row" data-index="${index}">
+        usersPanel.innerHTML = users.map((user, index) => {
+            return `<div class="row user-row" data-index="${index}">
                 <div class="users-photos">
                 <img src="${user.photo}" alt="users-photos">
               </div>
@@ -98,40 +84,34 @@ const app = async () => {
                 <div class="user-name">${user.name}</div>
                 <div class="user-email">${user.email}</div>
               </div>
-              </div>
-                `
-            usersPanel.innerHTML += template;
+              </div>`;
+        }).join("");
 
-            const userRows = usersPanel.getElementsByClassName("user-row");
-            for (let i = 0; i < userRows.length; i++) {
-                userRows[i].addEventListener('click', renderUserForm);
-            }
-        });
-
+        const userRows = Array.from(usersPanel.getElementsByClassName("user-row"));
+        userRows.forEach(userRow => userRow.addEventListener('click', renderUserForm));
     }
 
     const saveUser = (e, user) => {
         const selectedIndex = e.target.getAttribute('data-index');
-        const updatedUser = {id: user.id, photo: user.photo, ...user};
+        const updatedUser = { id: user.id, photo: user.photo, ...user };
 
-        for (let i = 0; i < editInputs.length; i++) {
-            let key = editInputs[i].getAttribute('data-key');
-            let value = editInputs[i].value;
+        Array.from(editInputs).forEach((input) => {
+            const key = input.getAttribute('data-key');
+            const value = input.value;
             updatedUser[key] = value;
-
-        }
+        });
 
         editUser(selectedIndex, updatedUser);
         renderUserList();
         saveButton.disabled = true;
-        cancelButton.hidden = true; 
+        cancelButton.hidden = true;
     }
 
     function renderUserForm(e) {
         saveButton.disabled = true;
         cancelButton.hidden = true;
-
         editing = true;
+
         let selectedIndex = null;
         if (typeof e === 'object') {
             e.stopPropagation();
@@ -156,7 +136,7 @@ const app = async () => {
 
     }
 
-    
+
 
     init();
 }
